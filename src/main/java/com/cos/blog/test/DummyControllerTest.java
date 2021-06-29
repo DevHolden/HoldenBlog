@@ -6,10 +6,12 @@ import java.util.function.Supplier;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,11 +32,25 @@ public class DummyControllerTest {
 	@Autowired	// 의존성주입(DI)
 	private UserRepository userRepository;
 	
+	// Delete문
+	@DeleteMapping("/dummy/user/{id}")
+	public String deleteUser(@PathVariable int id) {
+		try {
+			userRepository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {	// Exception은 모든 Exception의 부모이기 때문에 그냥 Exception을 걸어도 된다.
+			return "삭제에 실패하였습니다. 해당 id는 DB에 없습니다.";
+		}
+		
+		return "삭제되었습니다. id : " + id;
+	}
+	
+	
+	
 	// save 함수는 id를 전달하지 않으면 insert를 해주고
 	// save 함수는 id를 전달하면 해당 id에 대한 데이터가 있으면 update를 해주고
 	// save 함수는 id를 전달하면 해당 id에 대한 데이터가 없으면 insert를 한다.
 	// email, password UPDATE문
-	@Transactional
+	@Transactional		// 함수 종료시에 자동 commit을 한다.
 	@PutMapping("/dummy/user/{id}")
 	public User updateUser(@PathVariable int id, @RequestBody User requestUser) {
 		System.out.println("id : " + id);
@@ -52,7 +68,7 @@ public class DummyControllerTest {
 		// userRepository.save(user);
 		
 		// 더티 체킹
-		return null;
+		return user;
 	}
 	
 	// http://localhost:8000/blog/dummy/user
@@ -107,7 +123,7 @@ public class DummyControllerTest {
 		
 		user.setRole(RoleType.USER);		// Default값을 지정
 		// INSERT 문의 역할을 함. 
-		userRepository.save(user);
+		userRepository.save(user);,  
 		return "회원가입이 완료되었습니다.";
 		
 	}
