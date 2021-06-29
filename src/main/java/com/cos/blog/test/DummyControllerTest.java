@@ -123,7 +123,7 @@ public class DummyControllerTest {
 		
 		user.setRole(RoleType.USER);		// Default값을 지정
 		// INSERT 문의 역할을 함. 
-		userRepository.save(user);,  
+		userRepository.save(user);
 		return "회원가입이 완료되었습니다.";
 		
 	}
