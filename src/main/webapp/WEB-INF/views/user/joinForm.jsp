@@ -1,5 +1,5 @@
 <!--  Main Page -->
-<!--  header와 footer 분리 -->
+<!--  commit chk -->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ include file="../layout/header.jsp"%>
