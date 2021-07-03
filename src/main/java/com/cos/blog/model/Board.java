@@ -43,7 +43,7 @@ public class Board {
 	private int count;		// 조회수
 	
 	// Many = Board, User = One : 한 명의 유저는 여러 개의 게시글을 쓸 수 있다.
-	@ManyToOne(fetch = FetchType.EAGER)		// FetchType.EAGER : 무조건 user의 정보를 들고와야한다.
+	@ManyToOne(fetch = FetchType.EAGER)		// FetchType.EAGER : 무조건 user의 정보를 들고와야한다. (join을 해서 들고옴)
 	@JoinColumn(name="userId")
 	private User user;	// DB는 오브젝트를 저장할 수 없기에 FK 사용 but 자바 같은 객체지향 프로그램에서는 오브젝트를 저장할 수 있다.
 	
