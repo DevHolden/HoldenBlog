@@ -10,8 +10,13 @@ import com.cos.blog.model.User;
 // @Repository 생략 가능하다.
 // DAO
 public interface UserRepository extends JpaRepository<User, Integer>{
-	// JPA Naming 전략(실제로 JPA가 들고 있는 함수가 아님, but 이름을 이렇게 지어주면 아래의 쿼리문의 역할을 함)
-	// SELECT * FROM user WHERE username = ?1 AND password = ?2;
-	User findByUsernameAndPassword(String username, String password);
+
 	
 }
+
+
+
+
+// JPA Naming 전략(실제로 JPA가 들고 있는 함수가 아님, but 이름을 이렇게 지어주면 아래의 쿼리문의 역할을 함)
+// SELECT * FROM user WHERE username = ?1 AND password = ?2;
+// User findByUsernameAndPassword(String username, String password);

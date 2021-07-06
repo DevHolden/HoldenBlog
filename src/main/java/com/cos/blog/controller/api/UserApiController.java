@@ -19,7 +19,7 @@ public class UserApiController {
 	@Autowired	// 의존성 주입(DI) : 필요한(의존하는) 클래스를 직접 생성하는 것이 아닌, 주입해줌으로써 객체간의 결합도를 줄일 수 있다.
 	private UserService userService;
 	
-	@PostMapping("/api/user")
+	@PostMapping("/auth/joinProc")
 	public ResponseDto<Integer> save(@RequestBody User user) {	// username, password, email
 		System.out.println("UserApiController : save 호출됨");
 		// 실제로 DB에 insert를 하고 아래에서 return을 해야 함
@@ -28,17 +28,4 @@ public class UserApiController {
 		return new  ResponseDto<Integer>(HttpStatus.OK.value(), 1);	// 회원가입이 정상적으로 되었으면 응답을 해줌(1)
 	}
 	
-	
-	
-	/*	 >> Security를 사용하지 않은 login 로직
-	 * @PostMapping("/api/user/login") public ResponseDto<Integer>
-	 * login(@RequestBody User user, HttpSession session) { // 세션도 Spring에선 @Autowired를 통해 DI할 수 있다.
-	 * Controller의 매개변수로 받을 수 있다.
-	 * System.out.println("UserApiController : login호출됨"); User principal =
-	 * userService.로그인(user); // principal(접근주체)
-	 * 
-	 * if(principal != null) { // User객체를 잘 불러왔을 때 session.setAttribute("principal",
-	 * principal); // 세션 생성 } return new ResponseDto<Integer>(HttpStatus.OK.value(),
-	 * 1); // 로그인이 정상적으로 되었으면 응답을 해줌(1) }
-	 */
 }
