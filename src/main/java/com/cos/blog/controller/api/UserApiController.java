@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,12 +19,12 @@ public class UserApiController {
 
 	@Autowired	// 의존성 주입(DI) : 필요한(의존하는) 클래스를 직접 생성하는 것이 아닌, 주입해줌으로써 객체간의 결합도를 줄일 수 있다.
 	private UserService userService;
-	
+
+
 	@PostMapping("/auth/joinProc")
 	public ResponseDto<Integer> save(@RequestBody User user) {	// username, password, email
 		System.out.println("UserApiController : save 호출됨");
 		// 실제로 DB에 insert를 하고 아래에서 return을 해야 함
-		user.setRole(RoleType.USER);
 		userService.회원가입(user);
 		return new  ResponseDto<Integer>(HttpStatus.OK.value(), 1);	// 회원가입이 정상적으로 되었으면 응답을 해줌(1)
 	}
