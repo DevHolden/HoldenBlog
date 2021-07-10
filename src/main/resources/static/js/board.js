@@ -4,6 +4,11 @@ let index = {
 			// function()을 사용하려면 _this.save()라고 해야 this가 올바르게 지정됨
 			this.save();
 		});
+
+		$("#btn-delete").on("click", () => {	// function(){}이 아니라 ()=>{} : this를 바인딩 하기 위해 사용
+			// function()을 사용하려면 _this.save()라고 해야 this가 올바르게 지정됨
+			this.deleteById();
+		});
 	},
 
 	save: function() {
@@ -20,6 +25,22 @@ let index = {
 			dataType: "json"
 		}).done(function(resp) {	// 응답이 정상이면
 			alert("글 작성이 완료되었습니다.");
+			console.log(resp);
+			location.href = "/";
+		}).fail(function(error) {	 // 응답이 실패면
+			alert(JSON.stringify(error));
+		});
+	},
+
+	deleteById: function() {
+		var id = $("#id").text();
+		
+		$.ajax({
+			type: "DELETE",
+			url: "/api/board/"+id,
+			dataType: "json"
+		}).done(function(resp) {	// 응답이 정상이면
+			alert("글 삭제가 완료되었습니다.");
 			console.log(resp);
 			location.href = "/";
 		}).fail(function(error) {	 // 응답이 실패면
