@@ -7,7 +7,7 @@
 	<button class="btn btn-success" onclick="history.back()">돌아가기</button>
 
 	<c:if test="${board.user.id == principal.user.id}">
-		<button id="btn-update" class="btn btn-warning">수정</button>
+		<button onclick="location.href='/board/${board.id}/updateForm'" class="btn btn-warning">수정</button>
 		<button id="btn-delete" class="btn btn-danger">삭제</button>
 	</c:if>
 
