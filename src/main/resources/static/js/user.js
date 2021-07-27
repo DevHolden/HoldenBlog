@@ -4,6 +4,10 @@ let index = {
 		// function()을 사용하려면 _this.save()라고 해야 this가 올바르게 지정됨
 			this.save();
 		});
+		
+		$("#btn-update").on("click", ()=>{	
+			this.update();
+		});
 	},
 	
 	save: function(){
@@ -30,6 +34,29 @@ let index = {
 		}).fail(function(error){	 // 응답이 실패면
 			alert(JSON.stringify(error));
 		});	// ajax 통신을 이용해서 3개의 데이터를 json으로 변경하여 insert 요청을 한다.
+	},
+	
+	update: function(){
+		let data = {
+			id: $("#id").val(),		// #아이디 값으로 값을 찾아 변수에 넣음
+			username: $("#username").val(),	
+			password: $("#password").val(),
+			email: $("#email").val()
+		};
+
+		$.ajax({	
+			type: "PUT",
+			url: "/user",
+			data: JSON.stringify(data),	
+			contentType: "application/json; charset=utf-8",	
+			dataType: "json"	
+		}).done(function(resp){	
+			alert("회원수정이 완료되었습니다.");
+			console.log(resp);
+			location.href = "/";
+		}).fail(function(error){	 
+			alert(JSON.stringify(error));
+		});
 	},
 	
 }

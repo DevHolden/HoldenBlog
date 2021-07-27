@@ -1,7 +1,11 @@
 package com.cos.blog.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import com.cos.blog.service.UserService;
 
 // 인증이 안된 사용자들이 출입할 수 있는 경로를 /auth 이하 경로들만 사용 (인증이 필요 없는 곳에는 다  /auth를 붙임)
 // 그냥 주소가 / 이면 index.jsp로 감. 이 또한 허용
@@ -9,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class UserController {
+	
+	private UserService userService;
 
 	@GetMapping("/auth/joinForm")
 	public String joinForm() {
@@ -20,5 +26,10 @@ public class UserController {
 	public String loginForm() {
 		
 		return "user/loginForm";
+	}
+	
+	@GetMapping("/user/updateForm")
+	public String updateForm() {
+		return "user/updateForm";
 	}
 }
