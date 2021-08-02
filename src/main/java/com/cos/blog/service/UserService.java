@@ -22,7 +22,16 @@ public class UserService {
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 	
-
+	@Transactional(readOnly = true)
+	public User 회원찾기(String username) {
+		
+		// null이면 null을 리턴, 아니면 user를 리턴.
+		User user = userRepository.findByUsername(username).orElseGet(()->{
+			return new User();
+		});
+			return user;
+		}
+	
 	@Transactional	// 회원가입 서비스 전체가 하나의 트랜잭션으로 묶임, 모든 트랜잭션이 성공하면 Commit, 그렇지 않을 경우(오류가 있을 경우)에는 Rollback이 이루어짐
 	public void 회원가입(User user) {
 		String rawPassword = user.getPassword();	// 입력받은 password 원본
@@ -40,10 +49,14 @@ public class UserService {
 		User persistance = userRepository.findById(user.getId()).orElseThrow(()->{
 			return new IllegalArgumentException("회원 찾기 실패");
 		});
-		String rawPassword = user.getPassword();
-		String encPassword = encoder.encode(rawPassword);
-		persistance.setPassword(encPassword);
-		persistance.setEmail(user.getEmail());
+		
+		// Validate 체크
+		if(persistance.getOauth() == null  || persistance.getOauth().equals("")) {
+			String rawPassword = user.getPassword();
+			String encPassword = encoder.encode(rawPassword);
+			persistance.setPassword(encPassword);
+			persistance.setEmail(user.getEmail());
+		}
 		// 회원수정 함수 종료 시 = 서비스 종료 = 트랜잭션 종료 = commit이 자동으로 이루어짐
 	}
 }

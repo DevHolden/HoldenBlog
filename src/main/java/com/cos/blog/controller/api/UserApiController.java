@@ -43,7 +43,7 @@ public class UserApiController {
 	@PutMapping("/user")
 	public ResponseDto<Integer> update(@RequestBody User user) { // RequestBody가 있어야 json data를 받을 수 있다.
 		userService.회원수정(user);
-		// 세션 등록
+		// 세션 등록, 로그인 처리
 				Authentication authentication = 
 						authenticationManger.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
 				SecurityContextHolder.getContext().setAuthentication(authentication);
